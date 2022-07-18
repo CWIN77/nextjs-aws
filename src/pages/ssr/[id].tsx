@@ -1,7 +1,7 @@
 import { withSSRContext } from 'aws-amplify'
 import type { GetServerSideProps, NextPage } from 'next'
 import styled from 'styled-components'
-import { listPosts } from "../../graphql/queries"
+import { getPost } from "../../graphql/queries"
 
 const SsrPage: NextPage = ({ post }: any) => {
   return (
@@ -13,13 +13,17 @@ const SsrPage: NextPage = ({ post }: any) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
   const SSR = withSSRContext({ req });
-  const res = (await SSR.API.graphql({ query: listPosts }));
-  const id = query.id as string || "0";
+  const { data } = await SSR.API.graphql({
+    query: getPost,
+    variables: {
+      id: params?.id
+    }
+  });
   return {
     props: {
-      post: res.data.listPosts.items[id]
+      post: data.getPost
     }
   }
 }

@@ -10,7 +10,7 @@ const Home: NextPage = ({ posts }: any) => {
       <h1>SSR</h1>
       {
         posts.map((post: any, key: string) => (
-          <Link href={`/ssr/${post.id}`} key={key}><a>제목 : {post.title}</a></Link>
+          <Link href={`/ssr/${post.id}`} key={key}><a>{post.title}</a></Link>
         ))
       }
 
@@ -19,7 +19,7 @@ const Home: NextPage = ({ posts }: any) => {
       <h1>SSG</h1>
       {
         posts.map((post: any, key: string) => (
-          <Link href={`/ssg/${post.id}`} key={key}><a>제목 : {post.title}</a></Link>
+          <Link href={`/ssg/${post.id}`} key={key}><a>{post.title}</a></Link>
         ))
       }
     </Container>
