@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
-    "start": "start http://localhost:3003 && next dev -p 3003",
-    "simul": "next start",
+    "build": "next build",
+    "start": "next start",
+    "simul": "start http://localhost:3003 && next dev -p 3003",
     "export": "next export"
   },
   "dependencies": {
+    "aws-amplify": "^4.3.27",
     "babel-plugin-styled-components": "^2.0.7",
     "next": "12.1.6",
     "react": "18.2.0",
