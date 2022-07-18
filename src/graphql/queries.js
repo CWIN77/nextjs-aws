@@ -7,6 +7,7 @@ export const getPost = /* GraphQL */ `
       id
       title
       descript
+      img
       createdAt
       updatedAt
     }
@@ -23,6 +24,7 @@ export const listPosts = /* GraphQL */ `
         id
         title
         descript
+        img
         createdAt
         updatedAt
       }
