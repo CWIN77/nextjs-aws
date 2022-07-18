@@ -7,14 +7,14 @@ import { listPosts } from '../graphql/queries'
 const Home: NextPage = ({ posts }: any) => {
   return (
     <Container>
-      <h1>SSR</h1>
+      {/* <h1>SSR</h1>
       {
         posts.map((post: any, key: string) => (
           <Link href={`/ssr/${post.id}`} key={key}><a>{post.title}</a></Link>
         ))
       }
 
-      <br />
+      <br /> */}
 
       <h1>SSG</h1>
       {
