@@ -20,7 +20,7 @@ const SsgPage: NextPage = ({ post }: any) => {
     </Container>
   )
 }
-
+//test
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await SSR.API.graphql({ query: listPosts });
   const paths = data.listPosts.items.map((post: any) => ({
