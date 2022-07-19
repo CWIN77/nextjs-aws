@@ -23,7 +23,7 @@ const SsgPage: NextPage = ({ post }: any) => {
 //test
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await SSR.API.graphql({ query: listPosts });
-  const paths = data.listPosts.items.map((post: any) => ({
+  const paths = data.listPosts.items.slice(0, 9).map((post: any) => ({
     params: { id: post.id }
   }));
   return { paths, fallback: "blocking" }
