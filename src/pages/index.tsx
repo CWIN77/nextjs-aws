@@ -13,7 +13,6 @@ const Home: NextPage = ({ posts }: any) => {
           <Link href={`/ssg/${post.id}`} key={key}><a>{post.title}</a></Link>
         ))
       }
-      <div>change!!!</div>
     </Container>
   )
 }
