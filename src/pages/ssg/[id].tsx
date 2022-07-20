@@ -22,7 +22,7 @@ const SsgPage: NextPage<{ post: IPost }> = ({ post }: { post: IPost }) => {
       else window.alert("삭제 성공");
     }
   }
-
+//s
   return (
     <Container>
       <Head>
