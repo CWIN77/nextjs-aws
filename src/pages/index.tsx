@@ -71,7 +71,7 @@ const Home: NextPage<{posts:IPost[]}> = ({ posts }: {posts:IPost[]}) => {
     </Container>
   )
 }
-
+//test
 export const getStaticProps: GetStaticProps = async () => {
   const SSR = withSSRContext();
   const {data} = await SSR.API.graphql({
