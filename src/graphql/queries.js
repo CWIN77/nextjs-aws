@@ -9,7 +9,6 @@ export const getPost = /* GraphQL */ `
       descript
       img
       createdAt
-      updatedAt
     }
   }
 `;
@@ -26,7 +25,62 @@ export const listPosts = /* GraphQL */ `
         descript
         img
         createdAt
-        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+// export const postsByDate = /* GraphQL */ `
+//   query PostsByDate(
+//     $type: String!
+//     $createdAt: ModelStringKeyConditionInput
+//     $sortDirection: ModelSortDirection
+//     $filter: ModelPostFilterInput
+//     $limit: Int
+//     $nextToken: String
+//   ) {
+//     postsByDate(
+//       type: $type
+//       createdAt: $createdAt
+//       sortDirection: $sortDirection
+//       filter: $filter
+//       limit: $limit
+//       nextToken: $nextToken
+//     ) {
+//       items {
+//         id
+//         title
+//         descript
+//         img
+//         createdAt
+//       }
+//       nextToken
+//     }
+//   }
+// `;
+
+export const postsByDate = /* GraphQL */ `
+  query PostsByDate(
+    $type: String!
+    $createdAt: ModelStringKeyConditionInput
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByDate(
+      type: $type
+      createdAt: $createdAt
+      sortDirection: DESC
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        title
+        descript
+        img
+        createdAt
       }
       nextToken
     }

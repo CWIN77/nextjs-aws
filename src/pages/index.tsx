@@ -2,7 +2,7 @@ import { API, withSSRContext } from 'aws-amplify'
 import type { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { getPost, listPosts } from '../graphql/queries'
+import { getPost, listPosts, postsByDate } from '../graphql/queries'
 import { createPost as createPostQuery } from "../graphql/mutations"
 import { useState } from 'react'
 import { IPost } from '../types'
@@ -10,17 +10,16 @@ import { IPost } from '../types'
 const Home: NextPage<{posts:IPost[]}> = ({ posts }: {posts:IPost[]}) => {
   const [title,setTitle] = useState("");
   const [descript,setDescript] = useState("");
-
+  const [postList,setPostList] = useState(posts);
   const getRandomUid = () => {
     const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'; // 63
-    let uid = ''
+    let uid = '';
     for (let i = 0; i < 8; i++) {
-      const randomNum = Math.floor(Math.random() * chars.length)
-      uid += chars.substring(randomNum, randomNum + 1)
+      const randomNum = Math.floor(Math.random() * chars.length);
+      uid += chars.substring(randomNum, randomNum + 1);
     }
-    return uid
+    return uid;
   }
-
   const createPost = async () => {
     if(confirm("새 게시물을 포스트 하시겠습니까?")){
       let uid = getRandomUid();
@@ -38,12 +37,17 @@ const Home: NextPage<{posts:IPost[]}> = ({ posts }: {posts:IPost[]}) => {
               id:uid,
               title,
               descript,
-              img:"https://i.ibb.co/60S7pbD/page1.png"
+              img:"https://i.ibb.co/60S7pbD/page1.png",
+              type: "Post"
             }
           }
         }) as {data:{createPost:IPost | null}};
         if (data.createPost === null) window.alert("포스트에 실패했습니다.");
-        else window.location.reload();
+        else {
+          setPostList([data.createPost, ...postList]);
+          setTitle("");
+          setDescript("");
+        };
       }else{
         alert("오류! 다시 시도해주세요.");
       }
@@ -60,7 +64,7 @@ const Home: NextPage<{posts:IPost[]}> = ({ posts }: {posts:IPost[]}) => {
       <br/>
       <h1>List</h1>
       {
-        posts.map((post: IPost, key) => (
+        postList.map((post: IPost, key) => (
           <Link href={`/ssg/${post.id}`} key={key}><a>{post.title}</a></Link>
         ))
       }
@@ -70,10 +74,15 @@ const Home: NextPage<{posts:IPost[]}> = ({ posts }: {posts:IPost[]}) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const SSR = withSSRContext();
-  const { data } = await SSR.API.graphql({ query: listPosts });
+  const {data} = await SSR.API.graphql({
+    query: postsByDate,
+    variables: {
+      type: "Post"
+    }
+  }) as {data:{postsByDate:{items:IPost[]}}};
   return {
     props: {
-      posts: data.listPosts.items
+      posts: data.postsByDate.items
     },
     revalidate: 60,
   }

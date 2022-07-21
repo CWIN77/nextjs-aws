@@ -7,4 +7,6 @@ type Post @model {
   title:String!
   descript:String!
   img:String!
+  type: String! @index(name: "postsByDate", queryField: "postsByDate", sortKeyFields: ["createdAt"])
+  createdAt: String!
 }
